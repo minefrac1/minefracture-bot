@@ -1,0 +1,5 @@
+occupations = ["doctor", "engineer", "teacher", "artist", "chef", "pilot", "architect", "scientist", "nurse", "lawyer", "musician", "farmer", "librarian", "electrician", "photographer"]
+age_ranges = ["18-25", "25-35", "35-45", "45-55", "55-65", "65+"]
+political_views = ["Republican", "Democrat", "Unaffiliated"]
+location = ["the Midwest", "New England", "Hawaii", "Alaska", "the Southwest", "the South", "the Southeast", "the Northwest"]
+class_standing = ["lower-class", "upper-class", "middle-class"]

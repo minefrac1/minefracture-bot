@@ -4,6 +4,7 @@ import json
 import os
 import re
 import dotenv
+import random
 dotenv.load_dotenv()
 
 from openai import AsyncOpenAI
@@ -11,7 +12,7 @@ import numpy as np
 import requests
 import forecasting_tools
 from asknews_sdk import AskNewsSDK
-
+import mystuff
 
 ######################### CONSTANTS #########################
 # Constants
@@ -374,7 +375,12 @@ def call_asknews(question: str) -> str:
 # This section includes functionality for binary questions.
 
 BINARY_PROMPT_TEMPLATE = """
-You are a professional forecaster interviewing for a job.
+You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_views} person. You are in the age range {age_range}. 
+
+You have been asked an interview question.
+
+Despite your occupation being {occupation}, you enjoy making predictions about various events that could happen, and you use your unique viewpoint to influence your forecasts.
+Luckily, that's what the interview question is about.
 
 Your interview question is:
 {title}
@@ -428,6 +434,11 @@ async def get_binary_gpt_prediction(
     resolution_criteria = question_details["resolution_criteria"]
     background = question_details["description"]
     fine_print = question_details["fine_print"]
+    class_standing = mystuff.class_standing[random.randrange(len(mystuff.class_standing))]
+    occupation = mystuff.occupations[random.randrange(len(mystuff.occupations))]
+    age_range = mystuff.age_ranges[random.randrange(len(mystuff.age_ranges))]
+    political_view = mystuff.age_ranges[random.randrange(len(mystuff.age_ranges))]
+    location = mystuff.location[random.randrange(len(mystuff.location))]
     question_type = question_details["type"]
 
     summary_report = run_research(title)
@@ -439,6 +450,11 @@ async def get_binary_gpt_prediction(
         resolution_criteria=resolution_criteria,
         fine_print=fine_print,
         summary_report=summary_report,
+        class_standing=class_standing,
+        occupation = occupation,
+        age_range=age_range,
+        political_view=political_view,
+        location=location
     )
 
     async def get_rationale_and_probability(content: str) -> tuple[float, str]:
@@ -473,7 +489,12 @@ async def get_binary_gpt_prediction(
 # @title Numeric prompt & functions
 
 NUMERIC_PROMPT_TEMPLATE = """
-You are a professional forecaster interviewing for a job.
+You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_views} person. You are in the age range {age_range}. 
+
+You have been asked an interview question.
+
+Despite your occupation being {occupation}, you enjoy making predictions about various events that could happen, and you use your unique viewpoint to influence your forecasts.
+Luckily, that's what the interview question is about.
 
 Your interview question is:
 {title}
@@ -691,6 +712,11 @@ async def get_numeric_gpt_prediction(
     upper_bound = scaling["range_max"]
     lower_bound = scaling["range_min"]
     zero_point = scaling["zero_point"]
+    class_standing = mystuff.class_standing[random.randrange(len(mystuff.class_standing))]
+    occupation = mystuff.occupations[random.randrange(len(mystuff.occupations))]
+    age_range = mystuff.age_ranges[random.randrange(len(mystuff.age_ranges))]
+    political_view = mystuff.age_ranges[random.randrange(len(mystuff.age_ranges))]
+    location = mystuff.location[random.randrange(len(mystuff.location))]
 
     # Create messages about the bounds that are passed in the LLM prompt
     if open_upper_bound:
@@ -713,6 +739,11 @@ async def get_numeric_gpt_prediction(
         summary_report=summary_report,
         lower_bound_message=lower_bound_message,
         upper_bound_message=upper_bound_message,
+        class_standing=class_standing,
+        occupation = occupation,
+        age_range=age_range,
+        political_view=political_view,
+        location=location
     )
 
     async def ask_llm_to_get_cdf(content: str) -> tuple[list[float], str]:
@@ -757,7 +788,12 @@ async def get_numeric_gpt_prediction(
 # @title Multiple Choice prompt & functions
 
 MULTIPLE_CHOICE_PROMPT_TEMPLATE = """
-You are a professional forecaster interviewing for a job.
+You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_views} person. You are in the age range {age_range}. 
+
+You have been asked an interview question.
+
+Despite your occupation being {occupation}, you enjoy making predictions about various events that could happen, and you use your unique viewpoint to influence your forecasts.
+Luckily, that's what the interview question is about.
 
 Your interview question is:
 {title}
@@ -882,6 +918,11 @@ async def get_multiple_choice_gpt_prediction(
     fine_print = question_details["fine_print"]
     question_type = question_details["type"]
     options = question_details["options"]
+    class_standing = mystuff.class_standing[random.randrange(len(mystuff.class_standing))]
+    occupation = mystuff.occupations[random.randrange(len(mystuff.occupations))]
+    age_range = mystuff.age_ranges[random.randrange(len(mystuff.age_ranges))]
+    political_view = mystuff.age_ranges[random.randrange(len(mystuff.age_ranges))]
+    location = mystuff.location[random.randrange(len(mystuff.location))]
 
     summary_report = run_research(title)
 
@@ -893,6 +934,17 @@ async def get_multiple_choice_gpt_prediction(
         fine_print=fine_print,
         summary_report=summary_report,
         options=options,
+        title=title,
+        today=today,
+        background=background,
+        resolution_criteria=resolution_criteria,
+        fine_print=fine_print,
+        summary_report=summary_report,
+        class_standing=class_standing,
+        occupation = occupation,
+        age_range=age_range,
+        political_view=political_view,
+        location=location
     )
 
     async def ask_llm_for_multiple_choice_probabilities(
