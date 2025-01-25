@@ -375,7 +375,7 @@ def call_asknews(question: str) -> str:
 # This section includes functionality for binary questions.
 
 BINARY_PROMPT_TEMPLATE = """
-You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_views} person. You are in the age range {age_range}. 
+You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_view} person. You are in the age range {age_range}. 
 
 You have been asked an interview question.
 
@@ -489,7 +489,7 @@ async def get_binary_gpt_prediction(
 # @title Numeric prompt & functions
 
 NUMERIC_PROMPT_TEMPLATE = """
-You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_views} person. You are in the age range {age_range}. 
+You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_view} person. You are in the age range {age_range}. 
 
 You have been asked an interview question.
 
@@ -788,7 +788,7 @@ async def get_numeric_gpt_prediction(
 # @title Multiple Choice prompt & functions
 
 MULTIPLE_CHOICE_PROMPT_TEMPLATE = """
-You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_views} person. You are in the age range {age_range}. 
+You are a(n) {class_standing} {occupation} living in {location}, in the US. You hold the political viewpoints of a(n) {political_view} person. You are in the age range {age_range}. 
 
 You have been asked an interview question.
 
